@@ -16,8 +16,16 @@ export async function createPrize(formData: FormData) {
   const file = formData.get("image") as File | null;
   let imageUrl = "";
   if (file && file.size > 0) {
-    const blob = await put(file.name, file, { access: 'public' });
-    imageUrl = blob.url;
+    try {
+      const blob = await put(`prizes/${Date.now()}-${file.name}`, file, { 
+        access: 'public',
+        token: process.env.BLOB_READ_WRITE_TOKEN
+      });
+      imageUrl = blob.url;
+    } catch (err) {
+      console.error("[Blob Upload Error createPrize]", err);
+      throw err;
+    }
   }
 
   await prisma.prize.create({
@@ -50,8 +58,16 @@ export async function updatePrize(id: string, formData: FormData) {
   const file = formData.get("image") as File | null;
   let imageUrl = "";
   if (file && file.size > 0) {
-    const blob = await put(file.name, file, { access: 'public' });
-    imageUrl = blob.url;
+    try {
+      const blob = await put(`prizes/${Date.now()}-${file.name}`, file, { 
+        access: 'public',
+        token: process.env.BLOB_READ_WRITE_TOKEN
+      });
+      imageUrl = blob.url;
+    } catch (err) {
+      console.error("[Blob Upload Error updatePrize]", err);
+      throw err;
+    }
   }
 
   if (imageUrl) {
