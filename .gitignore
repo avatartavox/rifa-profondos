@@ -34,8 +34,18 @@ yarn-error.log*
 .env*
 
 # vercel
-.vercel
+
+# SQLite local dev DB
+*.db
+*.db-journal
+
+# Internal AI context
+.antigravity/
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+
+.vercel

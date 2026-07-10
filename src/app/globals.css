@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #f4f4f5;
+  
+  --color-brand-green: #56E52A; 
+  --color-brand-purple: #A020F0; 
+  --color-brand-orange: #FF5722; 
 }
 
 @theme inline {
@@ -10,17 +14,23 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  
+  --color-carnival-green: var(--color-brand-green);
+  --color-carnival-purple: var(--color-brand-purple);
+  --color-carnival-orange: var(--color-brand-orange);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Glassmorphism utility classes */
+.glass-card {
+  @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl rounded-2xl;
+}
+
+.glass-card-dark {
+  @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-2xl;
 }
