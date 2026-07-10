@@ -1,7 +1,20 @@
 import Link from "next/link";
-import { Ticket, Calendar, ArrowRight } from "lucide-react";
+import { Ticket, Calendar, ArrowRight, Gift } from "lucide-react";
+import { PrismaClient } from "@prisma/client";
 
-export default function Home() {
+const prisma = new PrismaClient();
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const featuredPrizes = await prisma.prize.findMany({
+    where: { isFeatured: true },
+    orderBy: { order: "asc" },
+    include: { images: true },
+    take: 3
+  });
+
+  const colors = ["border-carnival-green", "border-carnival-purple", "border-carnival-orange"];
+
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-background text-foreground">
       {/* Abstract Background pattern mimicking the horror carnival vibe */}
@@ -51,20 +64,29 @@ export default function Home() {
             <p className="text-center text-gray-400 mb-12 max-w-2xl mx-auto">Échale un vistazo a algunos de los increíbles premios que podrías llevarte a casa.</p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                { name: "Colocación de Bótox", val: "S/1,400", provider: "Dermaesthetic", color: "border-carnival-green" },
-                { name: "Robot Roomba Essential", val: "S/1,299", provider: "iRobot", color: "border-carnival-purple" },
-                { name: "Premio Mayor en Efectivo", val: "S/500", provider: "Promoción 2032", color: "border-carnival-orange" }
-              ].map((prize, i) => (
-                <div key={i} className={`glass-card-dark p-6 border-t-2 ${prize.color} hover:-translate-y-2 transition-transform duration-300`}>
-                  <div className="h-48 bg-black/50 rounded-xl mb-6 flex items-center justify-center border border-white/5">
-                    <span className="text-gray-600">Imagen de Premio</span>
-                  </div>
-                  <h4 className="text-xl font-bold mb-2 text-white">{prize.name}</h4>
-                  <p className="text-gray-400 text-sm mb-4">Valorizado en: <span className="font-bold text-white">{prize.val}</span></p>
-                  <p className="text-xs text-gray-500 uppercase tracking-wider">{prize.provider}</p>
+              {featuredPrizes.length === 0 ? (
+                <div className="col-span-3 text-center py-10 text-gray-500">
+                  <p>Pronto anunciaremos los premios destacados.</p>
                 </div>
-              ))}
+              ) : (
+                featuredPrizes.map((prize, i) => (
+                  <div key={prize.id} className={`glass-card-dark p-6 border-t-2 ${colors[i % colors.length]} hover:-translate-y-2 transition-transform duration-300 flex flex-col`}>
+                    <div className="h-48 bg-black/50 rounded-xl mb-6 flex items-center justify-center border border-white/5 overflow-hidden">
+                      {prize.images.length > 0 ? (
+                        <img src={prize.images[0].url} alt={prize.name} className="w-full h-full object-cover opacity-80" />
+                      ) : (
+                        <Gift className="w-10 h-10 text-gray-700" />
+                      )}
+                    </div>
+                    <h4 className="text-xl font-bold mb-2 text-white">{prize.name}</h4>
+                    <p className="text-gray-400 text-sm mb-4">Auspicia: {prize.providerIg || "Promoción 2032"}</p>
+                    <div className="flex justify-between items-center mt-auto pt-4 border-t border-white/10">
+                      <span className="text-sm font-semibold uppercase tracking-wider text-carnival-green">Destacado</span>
+                      <Link href={`/prizes/${prize.id}`} className="bg-white/10 px-3 py-1 rounded-full text-sm font-medium hover:bg-white/20 transition-colors">Ver Detalles</Link>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
             
             <div className="text-center mt-12">

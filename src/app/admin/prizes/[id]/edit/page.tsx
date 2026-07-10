@@ -31,9 +31,6 @@ export default async function EditPrizePage({ params }: { params: Promise<{ id: 
           <button 
             type="submit"
             className="flex items-center gap-2 bg-red-500/20 text-red-400 px-4 py-2 rounded font-bold hover:bg-red-500 hover:text-white transition-colors"
-            onClick={(e) => {
-              if(!confirm("¿Estás seguro de eliminar este premio?")) e.preventDefault();
-            }}
           >
             <Trash2 className="w-4 h-4" /> Eliminar
           </button>
