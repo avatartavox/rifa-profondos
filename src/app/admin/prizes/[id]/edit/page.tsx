@@ -106,6 +106,7 @@ export default async function EditPrizePage({ params }: { params: Promise<{ id: 
               accept="image/*"
               className="w-full bg-black border border-white/20 rounded-md p-2 text-white focus:border-carnival-green focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-carnival-green file:text-black hover:file:bg-green-400"
             />
+            <p className="text-xs text-gray-500 mt-2">Tamaño máximo: 4.5MB.</p>
           </div>
 
           <div className="pt-4 border-t border-white/10">

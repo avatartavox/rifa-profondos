@@ -7,6 +7,9 @@ import { put } from "@vercel/blob";
 
 const prisma = new PrismaClient();
 
+// Keep in sync with next.config.ts experimental.serverActions.bodySizeLimit
+const MAX_IMAGE_SIZE = 4.5 * 1024 * 1024;
+
 export async function createPrize(formData: FormData) {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
@@ -14,10 +17,14 @@ export async function createPrize(formData: FormData) {
   const isFeatured = formData.get("isFeatured") === "on";
   
   const file = formData.get("image") as File | null;
+  if (file && file.size > MAX_IMAGE_SIZE) {
+    throw new Error("La imagen supera el límite de 4.5MB. Por favor sube una imagen más liviana.");
+  }
+
   let imageUrl = "";
   if (file && file.size > 0) {
     try {
-      const blob = await put(`prizes/${Date.now()}-${file.name}`, file, { 
+      const blob = await put(`prizes/${Date.now()}-${file.name}`, file, {
         access: 'public',
         token: process.env.BLOB_READ_WRITE_TOKEN
       });
@@ -56,10 +63,14 @@ export async function updatePrize(id: string, formData: FormData) {
   const isFeatured = formData.get("isFeatured") === "on";
 
   const file = formData.get("image") as File | null;
+  if (file && file.size > MAX_IMAGE_SIZE) {
+    throw new Error("La imagen supera el límite de 4.5MB. Por favor sube una imagen más liviana.");
+  }
+
   let imageUrl = "";
   if (file && file.size > 0) {
     try {
-      const blob = await put(`prizes/${Date.now()}-${file.name}`, file, { 
+      const blob = await put(`prizes/${Date.now()}-${file.name}`, file, {
         access: 'public',
         token: process.env.BLOB_READ_WRITE_TOKEN
       });
