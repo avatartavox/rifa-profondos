@@ -36,3 +36,36 @@ export async function createPrize(formData: FormData) {
   
   redirect("/admin/prizes");
 }
+
+export async function updatePrize(id: string, formData: FormData) {
+  const name = formData.get("name") as string;
+  const description = formData.get("description") as string;
+  const providerIg = formData.get("providerIg") as string;
+  const isFeatured = formData.get("isFeatured") === "on";
+
+  await prisma.prize.update({
+    where: { id },
+    data: {
+      name,
+      description,
+      providerIg: providerIg || null,
+      isFeatured,
+    }
+  });
+
+  revalidatePath("/admin/prizes");
+  revalidatePath("/prizes");
+  revalidatePath("/");
+  redirect("/admin/prizes");
+}
+
+export async function deletePrize(id: string) {
+  await prisma.prize.delete({
+    where: { id }
+  });
+
+  revalidatePath("/admin/prizes");
+  revalidatePath("/prizes");
+  revalidatePath("/");
+  redirect("/admin/prizes");
+}

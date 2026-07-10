@@ -42,7 +42,11 @@ export default async function AdminPrizesPage() {
                     <span className="bg-white/10 text-gray-400 px-2 py-1 rounded text-xs">No</span>
                   )}
                 </td>
-                <td className="p-4 text-carnival-orange text-sm cursor-pointer hover:underline">Editar</td>
+                <td className="p-4">
+                  <Link href={`/admin/prizes/${prize.id}/edit`} className="text-carnival-orange text-sm cursor-pointer hover:underline">
+                    Editar
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
