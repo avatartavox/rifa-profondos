@@ -39,7 +39,7 @@ export default async function EditPrizePage({ params }: { params: Promise<{ id: 
       </div>
 
       <div className="glass-card-dark p-6 max-w-2xl">
-        <form action={updatePrizeWithId} className="space-y-6">
+        <form action={updatePrizeWithId} className="space-y-6" encType="multipart/form-data">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Nombre del Premio</label>
             <input 
