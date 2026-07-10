@@ -69,3 +69,18 @@ export async function deletePrize(id: string) {
   revalidatePath("/");
   redirect("/admin/prizes");
 }
+
+export async function reorderPrizes(items: { id: string; order: number }[]) {
+  const transactions = items.map((item) =>
+    prisma.prize.update({
+      where: { id: item.id },
+      data: { order: item.order },
+    })
+  );
+
+  await prisma.$transaction(transactions);
+  
+  revalidatePath("/admin/prizes");
+  revalidatePath("/prizes");
+  revalidatePath("/");
+}

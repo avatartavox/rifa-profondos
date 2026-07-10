@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export default async function PrizesPage() {
   const prizes = await prisma.prize.findMany({
     include: { images: true },
-    orderBy: { createdAt: "desc" },
+    orderBy: { order: "asc" },
   });
 
   return (
