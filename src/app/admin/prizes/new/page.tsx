@@ -49,6 +49,17 @@ export default function NewPrizePage() {
             />
           </div>
 
+          <div>
+            <label htmlFor="image" className="block text-sm font-medium text-gray-300 mb-2">Imagen del Premio</label>
+            <input 
+              type="file" 
+              name="image" 
+              id="image" 
+              accept="image/*"
+              className="w-full bg-black border border-white/20 rounded-md p-2 text-white focus:border-carnival-green focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-carnival-green file:text-black hover:file:bg-green-400"
+            />
+          </div>
+
           <div className="flex items-center gap-2">
             <input type="checkbox" name="isFeatured" id="isFeatured" className="w-4 h-4 rounded border-white/20" />
             <label htmlFor="isFeatured" className="text-sm font-medium text-gray-300">Destacar en la página de inicio</label>

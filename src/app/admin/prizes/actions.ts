@@ -3,6 +3,7 @@
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { put } from "@vercel/blob";
 
 const prisma = new PrismaClient();
 
@@ -12,13 +13,12 @@ export async function createPrize(formData: FormData) {
   const providerIg = formData.get("providerIg") as string;
   const isFeatured = formData.get("isFeatured") === "on";
   
-  // Here we would handle the Vercel Blob upload if a file is present.
-  // const file = formData.get("image") as File;
-  // let imageUrl = "";
-  // if (file.size > 0) {
-  //   const blob = await put(file.name, file, { access: 'public' });
-  //   imageUrl = blob.url;
-  // }
+  const file = formData.get("image") as File | null;
+  let imageUrl = "";
+  if (file && file.size > 0) {
+    const blob = await put(file.name, file, { access: 'public' });
+    imageUrl = blob.url;
+  }
 
   await prisma.prize.create({
     data: {
@@ -26,7 +26,11 @@ export async function createPrize(formData: FormData) {
       description,
       providerIg: providerIg || null,
       isFeatured,
-      // If we had an imageUrl, we would create a related PrizeImage record here
+      images: imageUrl ? {
+        create: {
+          url: imageUrl
+        }
+      } : undefined
     }
   });
 
@@ -43,6 +47,20 @@ export async function updatePrize(id: string, formData: FormData) {
   const providerIg = formData.get("providerIg") as string;
   const isFeatured = formData.get("isFeatured") === "on";
 
+  const file = formData.get("image") as File | null;
+  let imageUrl = "";
+  if (file && file.size > 0) {
+    const blob = await put(file.name, file, { access: 'public' });
+    imageUrl = blob.url;
+  }
+
+  if (imageUrl) {
+    // Delete existing images first if we're replacing
+    await prisma.prizeImage.deleteMany({
+      where: { prizeId: id }
+    });
+  }
+
   await prisma.prize.update({
     where: { id },
     data: {
@@ -50,6 +68,13 @@ export async function updatePrize(id: string, formData: FormData) {
       description,
       providerIg: providerIg || null,
       isFeatured,
+      ...(imageUrl && {
+        images: {
+          create: {
+            url: imageUrl
+          }
+        }
+      })
     }
   });
 

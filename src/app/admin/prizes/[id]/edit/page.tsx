@@ -9,7 +9,8 @@ const prisma = new PrismaClient();
 export default async function EditPrizePage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   const prize = await prisma.prize.findUnique({
-    where: { id: resolvedParams.id }
+    where: { id: resolvedParams.id },
+    include: { images: true }
   });
 
   if (!prize) {
@@ -83,6 +84,28 @@ export default async function EditPrizePage({ params }: { params: Promise<{ id: 
               className="w-4 h-4 rounded border-white/20" 
             />
             <label htmlFor="isFeatured" className="text-sm font-medium text-gray-300">Destacar en la página de inicio</label>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Imagen del Premio</label>
+            {prize.images.length > 0 && (
+              <div className="mb-3">
+                <p className="text-xs text-gray-500 mb-2">Imagen actual:</p>
+                <img 
+                  src={prize.images[0].url} 
+                  alt={prize.name} 
+                  className="h-40 w-auto object-cover rounded-lg border border-white/10"
+                />
+                <p className="text-xs text-gray-500 mt-2">Sube una nueva imagen para reemplazarla.</p>
+              </div>
+            )}
+            <input 
+              type="file" 
+              name="image" 
+              id="image" 
+              accept="image/*"
+              className="w-full bg-black border border-white/20 rounded-md p-2 text-white focus:border-carnival-green focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-carnival-green file:text-black hover:file:bg-green-400"
+            />
           </div>
 
           <div className="pt-4 border-t border-white/10">
