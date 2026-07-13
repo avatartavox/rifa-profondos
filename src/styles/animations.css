@@ -182,3 +182,107 @@
     animation: nudgeUp 0.3s cubic-bezier(0.23, 1, 0.320, 1) forwards;
   }
 }
+
+/* ===================================================================
+   Poster-style scattered prize animations (hero overhaul)
+   =================================================================== */
+
+/* Pop-in entrance for scattered floating prizes: scale + rotate + fade */
+@keyframes popInScatter {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(var(--pop-rotate, 0deg)) translateY(30px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08) rotate(var(--pop-rotate, 0deg)) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(var(--pop-rotate, 0deg)) translateY(0);
+  }
+}
+
+.animate-pop-scatter {
+  animation: popInScatter 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  will-change: transform, opacity;
+}
+
+/* Idle float variants for scattered items - each item picks a variant for variety */
+@keyframes floatScatterA {
+  0%, 100% { transform: rotate(var(--pop-rotate, 0deg)) translateY(0px) translateX(0px); }
+  50% { transform: rotate(var(--pop-rotate, 0deg)) translateY(-16px) translateX(4px); }
+}
+
+@keyframes floatScatterB {
+  0%, 100% { transform: rotate(var(--pop-rotate, 0deg)) translateY(0px) translateX(0px); }
+  50% { transform: rotate(var(--pop-rotate, 0deg)) translateY(14px) translateX(-6px); }
+}
+
+@keyframes floatScatterC {
+  0%, 100% { transform: rotate(var(--pop-rotate, 0deg)) translateY(0px) rotate(0deg); }
+  50% { transform: rotate(var(--pop-rotate, 0deg)) translateY(-10px) rotate(3deg); }
+}
+
+.animate-float-scatter-a {
+  animation: floatScatterA 5s ease-in-out infinite;
+  animation-delay: 0.9s;
+  will-change: transform;
+}
+
+.animate-float-scatter-b {
+  animation: floatScatterB 6s ease-in-out infinite;
+  animation-delay: 0.9s;
+  will-change: transform;
+}
+
+.animate-float-scatter-c {
+  animation: floatScatterC 4.5s ease-in-out infinite;
+  animation-delay: 0.9s;
+  will-change: transform;
+}
+
+/* Title pop-in for the central logo/title block */
+@keyframes titlePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-title-pop {
+  animation: titlePop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Ribbon badge slide-in */
+@keyframes ribbonIn {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-ribbon-in {
+  animation: ribbonIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pop-scatter,
+  .animate-float-scatter-a,
+  .animate-float-scatter-b,
+  .animate-float-scatter-c,
+  .animate-title-pop,
+  .animate-ribbon-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
