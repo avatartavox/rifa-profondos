@@ -1,0 +1,48 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#1a1a2e"/>
+
+  <!-- Decorative gradient circle -->
+  <defs>
+    <radialGradient id="makeupGradient">
+      <stop offset="0%" style="stop-color:#FF5722;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#FF5722;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  <circle cx="200" cy="150" r="120" fill="url(#makeupGradient)"/>
+
+  <!-- Makeup palette icon -->
+  <g transform="translate(200, 150)">
+    <!-- Palette base -->
+    <ellipse cx="0" cy="0" rx="50" ry="40" fill="none" stroke="#FF5722" stroke-width="3"/>
+
+    <!-- Thumb hole -->
+    <circle cx="42" cy="30" r="8" fill="none" stroke="#FF5722" stroke-width="2"/>
+
+    <!-- Color swatches in palette -->
+    <!-- Red/Pink -->
+    <circle cx="-25" cy="-15" r="10" fill="#FF6B9D"/>
+    <!-- Purple -->
+    <circle cx="0" cy="-20" r="10" fill="#A020F0"/>
+    <!-- Orange -->
+    <circle cx="25" cy="-15" r="10" fill="#FF5722"/>
+    <!-- Gold -->
+    <circle cx="-30" cy="8" r="10" fill="#FFD700"/>
+    <!-- Nude -->
+    <circle cx="0" cy="15" r="10" fill="#E8B4A8"/>
+    <!-- Berry -->
+    <circle cx="30" cy="8" r="10" fill="#8B3A62"/>
+
+    <!-- Brush icon -->
+    <rect x="-8" y="35" width="16" height="25" rx="3" fill="#56E52A" opacity="0.7"/>
+    <circle cx="0" cy="28" r="12" fill="#56E52A"/>
+  </g>
+
+  <!-- Text -->
+  <text x="200" y="260" text-anchor="middle" font-size="18" font-weight="bold" fill="#FF5722" font-family="Arial">
+    MAQUILLAJE
+  </text>
+  <text x="200" y="285" text-anchor="middle" font-size="12" fill="#A020F0" font-family="Arial">
+    Juego de cosmética
+  </text>
+</svg>

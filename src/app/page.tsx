@@ -1,6 +1,7 @@
-import Link from "next/link";
-import { Ticket, Calendar, ArrowRight, Gift } from "lucide-react";
 import { PrismaClient } from "@prisma/client";
+import AnimatedHero from "./components/AnimatedHero";
+import PrizeGrid from "./components/PrizeGrid";
+import Link from "next/link";
 
 const prisma = new PrismaClient();
 export const dynamic = "force-dynamic";
@@ -10,99 +11,58 @@ export default async function Home() {
     where: { isFeatured: true },
     orderBy: { order: "asc" },
     include: { images: true },
-    take: 3
   });
-
-  const colors = ["border-carnival-green", "border-carnival-purple", "border-carnival-orange"];
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-background text-foreground">
-      {/* Abstract Background pattern mimicking the horror carnival vibe */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none" 
-           style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, var(--color-brand-purple) 0%, transparent 50%), radial-gradient(circle at 80% 20%, var(--color-brand-green) 0%, transparent 40%)' }} />
-
       <main className="flex-1 flex flex-col relative z-10">
-        {/* Hero Section */}
-        <section className="min-h-[80vh] flex flex-col items-center justify-center px-4 py-20 text-center">
-          <div className="glass-card-dark p-8 md:p-12 max-w-4xl mx-auto border-t-carnival-green border-t-4 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <h2 className="text-carnival-green font-bold tracking-widest uppercase mb-2">Rifa Pro Fondos</h2>
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight text-white drop-shadow-md">
-              FIESTA DE LA <br/> <span className="text-carnival-purple">FANTASÍA</span> <span className="text-carnival-orange">2026</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-              ¡Únete a nosotros para una causa increíble! Gana premios espectaculares mientras apoyas a la Promoción 2032.
-            </p>
-            
-            <div className="flex flex-wrap items-center justify-center gap-6 mb-12">
-              <div className="flex items-center gap-2 glass-card px-6 py-3 border-carnival-green/30">
-                <Calendar className="text-carnival-green w-6 h-6" />
-                <div className="text-left">
-                  <p className="text-xs text-gray-400 uppercase font-semibold">Sorteo en Vivo</p>
-                  <p className="font-bold">24 Agosto 4:00 PM</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 glass-card px-6 py-3 border-carnival-purple/30">
-                <Ticket className="text-carnival-purple w-6 h-6" />
-                <div className="text-left">
-                  <p className="text-xs text-gray-400 uppercase font-semibold">Inversión</p>
-                  <p className="font-bold">10 Soles</p>
-                </div>
-              </div>
-            </div>
-
-            <Link href="/prizes" className="inline-flex items-center gap-2 bg-carnival-orange text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-600 transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,87,34,0.4)]">
-              Ver Catálogo de Premios <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </section>
+        {/* Hero Section with Animations */}
+        <AnimatedHero />
 
         {/* Featured Prizes Preview Section */}
-        <section className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <h3 className="text-3xl md:text-5xl font-bold text-center mb-4 text-white">MÁS DE <span className="text-carnival-green">30 PREMIOS</span></h3>
-            <p className="text-center text-gray-400 mb-12 max-w-2xl mx-auto">Échale un vistazo a algunos de los increíbles premios que podrías llevarte a casa.</p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {featuredPrizes.length === 0 ? (
-                <div className="col-span-3 text-center py-10 text-gray-500">
-                  <p>Pronto anunciaremos los premios destacados.</p>
-                </div>
-              ) : (
-                featuredPrizes.map((prize, i) => (
-                  <div key={prize.id} className={`glass-card-dark p-6 border-t-2 ${colors[i % colors.length]} hover:-translate-y-2 transition-transform duration-300 flex flex-col`}>
-                    <div className="h-48 bg-black/50 rounded-xl mb-6 flex items-center justify-center border border-white/5 overflow-hidden">
-                      {prize.images.length > 0 ? (
-                        <img src={prize.images[0].url} alt={prize.name} className="w-full h-full object-cover opacity-80" />
-                      ) : (
-                        <Gift className="w-10 h-10 text-gray-700" />
-                      )}
-                    </div>
-                    <h4 className="text-xl font-bold mb-2 text-white">{prize.name}</h4>
-                    <p className="text-gray-400 text-sm mb-4">Auspicia: {prize.providerIg || "Promoción 2032"}</p>
-                    <div className="flex justify-between items-center mt-auto pt-4 border-t border-white/10">
-                      <span className="text-sm font-semibold uppercase tracking-wider text-carnival-green">Destacado</span>
-                      <Link href={`/prizes/${prize.id}`} className="bg-white/10 px-3 py-1 rounded-full text-sm font-medium hover:bg-white/20 transition-colors">Ver Detalles</Link>
-                    </div>
-                  </div>
-                ))
-              )}
+        <section className="py-16 md:py-24 px-4 relative">
+          <div className="max-w-7xl mx-auto">
+            {/* Section Header */}
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+                MÁS DE <span className="text-carnival-green">30 PREMIOS</span>
+              </h2>
+              <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto">
+                Échale un vistazo a algunos de los increíbles premios que podrías llevarte a casa. Todos los
+                premios están disponibles y garantizados.
+              </p>
             </div>
-            
-            <div className="text-center mt-12">
-              <Link href="/prizes" className="text-carnival-green hover:text-white transition-colors underline underline-offset-4 font-semibold">
-                Ver todos los premios...
-              </Link>
+
+            {/* Prize Grid with Floating Animations */}
+            <div className="mb-12 md:mb-16">
+              <PrizeGrid prizes={featuredPrizes} />
             </div>
+
+            {/* View All Link */}
+            {featuredPrizes.length > 0 && (
+              <div className="text-center">
+                <Link
+                  href="/prizes"
+                  className="inline-flex items-center gap-2 text-carnival-green hover:text-carnival-orange transition-colors underline underline-offset-4 font-semibold text-base md:text-lg"
+                >
+                  Ver todos los premios →
+                </Link>
+              </div>
+            )}
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-8 text-center bg-black/50">
-        <p className="text-gray-500 mb-4">Organizador: Promoción 2032</p>
-        <a href="https://instagram.com/colegio.nivela" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-gray-400 hover:text-carnival-purple transition-colors font-bold">
-          IG: @colegio.nivela
+      <footer className="border-t border-white/10 py-8 md:py-12 text-center bg-black/50 relative z-10">
+        <p className="text-gray-500 mb-3 text-sm md:text-base">Organizador: Promoción 2032</p>
+        <a
+          href="https://instagram.com/colegio.nivela"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 text-gray-400 hover:text-carnival-purple transition-colors font-bold text-sm md:text-base"
+        >
+          📸 @colegio.nivela
         </a>
       </footer>
     </div>
