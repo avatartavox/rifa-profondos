@@ -286,3 +286,28 @@
     transform: none;
   }
 }
+
+/* ===================================================================
+   Haunting background pulse - crossfades the highlighted pattern layer
+   over the dim base pattern to create a breathing/glowing effect
+   =================================================================== */
+@keyframes bgPulseGlow {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-bg-pulse-glow {
+  animation: bgPulseGlow 5s ease-in-out infinite;
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bg-pulse-glow {
+    animation: none;
+    opacity: 0.5;
+  }
+}

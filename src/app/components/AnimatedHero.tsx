@@ -7,14 +7,16 @@ import ScatteredPrizes from './ScatteredPrizes';
 export default function AnimatedHero() {
   return (
     <section className="relative min-h-[92vh] md:min-h-screen flex flex-col items-center justify-center px-4 py-16 text-center overflow-hidden">
-      {/* Tiled carnival background pattern */}
+      {/* Base carnival background pattern (dim state) */}
       <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: 'url(/patterns/carnival-tile.svg)',
-          backgroundRepeat: 'repeat',
-          backgroundSize: '410px 460px',
-        }}
+        className="absolute inset-0 z-0 bg-cover bg-center"
+        style={{ backgroundImage: 'url(/patterns/bg-normal.png)' }}
+        aria-hidden="true"
+      />
+      {/* Highlighted pattern layer - crossfades in/out to create a haunting pulse */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center animate-bg-pulse-glow"
+        style={{ backgroundImage: 'url(/patterns/bg-glow.png)' }}
         aria-hidden="true"
       />
       {/* Darken + vignette for legibility */}
