@@ -151,6 +151,13 @@ export default function FigmaHeroComposition() {
             width: `${item.width}%`,
             height: `${item.height}%`,
             zIndex: item.z ?? 10,
+            // The float animation's `transform` creates a new stacking context on
+            // this wrapper, which would otherwise trap each layer's mix-blend-mode
+            // to only see its siblings inside this box (never the real page
+            // background behind it). Screen-blending the whole composited item
+            // against that real backdrop here fixes the residual dark box around
+            // transparent regions of the base cutout.
+            mixBlendMode: 'screen',
           }}
           aria-hidden="true"
         >
