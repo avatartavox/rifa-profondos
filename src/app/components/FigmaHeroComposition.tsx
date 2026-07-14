@@ -119,7 +119,7 @@ const items: FloatItem[] = [
 export default function FigmaHeroComposition() {
   return (
     <div
-      className="relative w-full mx-auto"
+      className="relative w-full mx-auto overflow-hidden"
       style={{ maxWidth: 1280, aspectRatio: '1280 / 728' }}
     >
       {/* Mystical energy ring behind everything */}
