@@ -311,3 +311,43 @@
     opacity: 0.5;
   }
 }
+
+/* ===================================================================
+   Figma hero composition: ring slow spin + gentle item float
+   =================================================================== */
+@keyframes ringSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-ring-spin {
+  animation: ringSpin 40s linear infinite;
+  will-change: transform;
+}
+
+@keyframes itemFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-item-float {
+  animation: itemFloat 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-item-float:nth-child(odd) {
+  animation-duration: 4.6s;
+  animation-delay: 0.3s;
+}
+
+.animate-item-float:nth-child(3n) {
+  animation-duration: 5.2s;
+  animation-delay: 0.6s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ring-spin,
+  .animate-item-float {
+    animation: none;
+  }
+}
