@@ -2,126 +2,129 @@
 
 import Image from 'next/image';
 
+type BlendMode = 'normal' | 'plus-lighter';
+
+interface Layer {
+  src: string;
+  blend: BlendMode;
+  opacity?: number;
+  fit?: 'cover' | 'contain'; // 'contain' for crisp cutouts whose native aspect differs from the group box
+}
+
 interface FloatItem {
   key: string;
-  base: string;
-  glow?: string;
-  glowOpacity?: number;
-  left: number; // percent
+  left: number; // percent, relative to the 1280x728 composition
   top: number; // percent
   width: number; // percent
   height: number; // percent
+  layers: Layer[]; // bottom -> top paint order, matching Figma's layer stack
   z?: number;
 }
 
 // Positions are percentages of the 1280x728 Figma frame, converted from
 // the exact node coordinates so the whole composition scales as one unit.
+// Each item is a "sandwich" of layers (bottom -> top), matching Figma's
+// per-layer blend mode exactly: 'normal' (regular/crisp cutout) or
+// 'plus-lighter' (glow/aura pass, additive blend over the layer below).
 const items: FloatItem[] = [
   {
-    key: 'bills-bottom',
-    base: '/hero/bills-bottom.png',
-    left: 46.797,
-    top: 98.011,
-    width: 16.447,
-    height: 28.917,
-    z: 10,
-  },
-  {
     key: 'soccer',
-    base: '/hero/soccer-base.png',
-    glow: '/hero/soccer-glow.png',
-    glowOpacity: 0.76,
     left: 20.156,
     top: 41.346,
     width: 16.447,
     height: 28.917,
-    z: 10,
+    layers: [
+      { src: '/hero/soccer-bottom-regular.png', blend: 'normal' },
+      { src: '/hero/soccer-top-blend.png', blend: 'plus-lighter', opacity: 0.76 },
+    ],
   },
   {
     key: 'bills-main',
-    base: '/hero/bills-main-base.png',
-    glow: '/hero/bills-main-glow.png',
-    glowOpacity: 0.52,
     left: 23.047,
     top: 12.912,
     width: 17.656,
     height: 31.044,
-    z: 10,
+    layers: [
+      { src: '/hero/bills-main-bottom-blend.png', blend: 'plus-lighter', opacity: 0.52 },
+      { src: '/hero/bills-main-top-regular.png', blend: 'normal' },
+    ],
   },
   {
     key: 'waist-trainer',
-    base: '/hero/waist-base.png',
-    glow: '/hero/waist-glow.png',
-    glowOpacity: 0.76,
     left: 65.078,
     top: 43.819,
     width: 14.531,
     height: 25.549,
-    z: 10,
+    layers: [
+      { src: '/hero/waist-bottom-blend.png', blend: 'plus-lighter', opacity: 0.76 },
+      { src: '/hero/waist-top-regular.png', blend: 'normal' },
+    ],
   },
   {
     key: 'roomba',
-    base: '/hero/roomba.png',
-    glow: '/hero/roomba-glow.png',
-    glowOpacity: 0.5,
     left: 59.531,
     top: 11.47,
     width: 20.781,
     height: 36.538,
-    z: 10,
+    layers: [
+      { src: '/hero/roomba-bottom-blend.png', blend: 'plus-lighter' },
+      { src: '/hero/roomba-middle-regular.png', blend: 'normal' },
+      { src: '/hero/roomba-bottom-blend.png', blend: 'plus-lighter', opacity: 0.24 },
+    ],
   },
   {
     key: 'ramen',
-    base: '/hero/ramen.png',
-    glow: '/hero/ramen-glow.png',
-    glowOpacity: 0.5,
     left: 43.75,
     top: 71.703,
     width: 14.375,
     height: 28.229,
-    z: 10,
+    layers: [
+      { src: '/hero/ramen-bottom-blend.png', blend: 'plus-lighter' },
+      { src: '/hero/ramen-middle-regular.png', blend: 'normal' },
+      { src: '/hero/ramen-bottom-blend.png', blend: 'plus-lighter', opacity: 0.2 },
+    ],
   },
   {
     key: 'skincare',
-    base: '/hero/skincare.png',
-    glow: '/hero/skincare-glow.png',
-    glowOpacity: 0.5,
     left: 42.656,
     top: -2.61,
     width: 18.438,
     height: 32.418,
-    z: 10,
+    layers: [
+      { src: '/hero/skincare-bottom-blend.png', blend: 'plus-lighter' },
+      { src: '/hero/skincare-middle-regular.png', blend: 'normal' },
+      { src: '/hero/skincare-bottom-blend.png', blend: 'plus-lighter', opacity: 0.3 },
+    ],
   },
   {
     key: 'giftcard',
-    base: '/hero/giftcard.png',
-    glow: '/hero/giftcard-glow.png',
-    glowOpacity: 0.57,
     left: 28.281,
     top: 64.835,
     width: 13.828,
     height: 24.313,
-    z: 10,
+    layers: [
+      { src: '/hero/giftcard-bottom-blend.png', blend: 'plus-lighter', opacity: 0.57 },
+      { src: '/hero/giftcard-middle-regular.png', blend: 'normal', fit: 'contain' },
+      { src: '/hero/giftcard-bottom-blend.png', blend: 'plus-lighter', opacity: 0.28 },
+    ],
   },
   {
     key: 'makeup',
-    base: '/hero/makeup.png',
-    glow: '/hero/makeup-glow.png',
-    glowOpacity: 0.6,
     left: 58.984,
     top: 66.621,
     width: 10.938,
     height: 19.231,
-    z: 10,
+    layers: [
+      { src: '/hero/makeup-bottom-blend.png', blend: 'plus-lighter' },
+      { src: '/hero/makeup-middle-regular.png', blend: 'normal', fit: 'contain' },
+      { src: '/hero/makeup-top-blend.png', blend: 'plus-lighter', opacity: 0.25 },
+    ],
   },
 ];
 
 export default function FigmaHeroComposition() {
   return (
-    <div
-      className="relative w-full mx-auto overflow-hidden"
-      style={{ maxWidth: 1280, aspectRatio: '1280 / 728' }}
-    >
+    <div className="relative w-full mx-auto overflow-hidden" style={{ maxWidth: 1280, aspectRatio: '1280 / 728' }}>
       {/* Mystical energy ring behind everything */}
       <div
         className="absolute animate-ring-spin"
@@ -137,7 +140,7 @@ export default function FigmaHeroComposition() {
         <Image src="/hero/ring.png" alt="" fill sizes="60vw" className="object-cover pointer-events-none" priority />
       </div>
 
-      {/* Floating prize items scattered around the ring */}
+      {/* Floating prize items scattered around the ring - each a layered sandwich */}
       {items.map((item) => (
         <div
           key={item.key}
@@ -152,18 +155,18 @@ export default function FigmaHeroComposition() {
           aria-hidden="true"
         >
           <div className="relative w-full h-full">
-            <Image src={item.base} alt="" fill sizes="20vw" className="object-cover pointer-events-none" priority />
-            {item.glow && (
+            {item.layers.map((layer, i) => (
               <Image
-                src={item.glow}
+                key={i}
+                src={layer.src}
                 alt=""
                 fill
                 sizes="20vw"
-                className="object-cover pointer-events-none"
-                style={{ mixBlendMode: 'plus-lighter', opacity: item.glowOpacity ?? 0.6 }}
+                className={`pointer-events-none ${layer.fit === 'contain' ? 'object-contain' : 'object-cover'}`}
+                style={layer.blend === 'plus-lighter' ? { mixBlendMode: 'plus-lighter', opacity: layer.opacity ?? 1 } : undefined}
                 priority
               />
-            )}
+            ))}
           </div>
         </div>
       ))}
