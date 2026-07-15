@@ -1,46 +1,56 @@
 'use client';
 
 import Link from 'next/link';
-import FigmaHeroComposition from './FigmaHeroComposition';
 
 export default function AnimatedHero() {
   return (
-    <section className="relative flex flex-col items-center justify-center px-4 py-10 md:py-16 text-center overflow-hidden">
+    <section className="relative flex flex-col items-center justify-center overflow-hidden px-4 py-16 md:py-20 text-center min-h-[70vh] md:min-h-[80vh]">
       {/* Base carnival background pattern (dim state) */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{ backgroundImage: 'url(/patterns/bg-normal.png)' }}
+        style={{ backgroundImage: 'url(/patterns/bg-normal.svg)' }}
         aria-hidden="true"
       />
       {/* Highlighted pattern layer - crossfades in/out to create a haunting pulse */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center animate-bg-pulse-glow"
-        style={{ backgroundImage: 'url(/patterns/bg-glow.png)' }}
+        style={{ backgroundImage: 'url(/patterns/bg-glow.svg)' }}
         aria-hidden="true"
       />
 
-      {/* Poster composition: energy ring + scattered prize photos (from Figma) */}
-      <div className="relative w-full z-10">
-        <FigmaHeroComposition />
-
-        {/* Central content overlay - positioned to match Figma's Frame 19 (left478/1280, top186/728, w346/1280) */}
-        <div
-          className="absolute z-20 flex flex-col items-center gap-2 md:gap-[10px]"
-          style={{
-            left: '50%',
-            top: '25.549%',
-            width: 'clamp(200px, 27.031%, 346px)',
-            transform: 'translateX(-50%)',
-          }}
-        >
-          <p
-            className="font-(family-name:--font-display) text-white uppercase tracking-tight text-center w-full"
-            style={{ fontSize: 'clamp(8px, 1.19vw, 15px)' }}
+      {/* Central content */}
+      <div
+        className="relative z-10 flex flex-col items-center animate-title-pop"
+        style={{ gap: 'clamp(28px, 4.84vw, 62px)' }}
+      >
+        {/* Title block */}
+        <div className="flex flex-col items-center w-full" style={{ gap: 'clamp(14px, 2.27vw, 29px)' }}>
+          <div
+            className="flex flex-col items-center uppercase text-center w-full"
+            style={{ gap: 'clamp(3px, 0.39vw, 5px)' }}
           >
-            Rifa Pro Fondos
-          </p>
+            <p
+              className="font-(family-name:--font-display) text-white tracking-tight"
+              style={{ fontSize: 'clamp(14px, 1.75vw, 22.436px)' }}
+            >
+              Rifa Pro Fondos
+            </p>
+            <p
+              className="font-sans font-semibold tracking-wide"
+              style={{
+                fontSize: 'clamp(8px, 1.01vw, 12.971px)',
+                color: '#53ec32',
+                textShadow: '0 1px 6.2px #53ec32',
+              }}
+            >
+              Organiza Promo 2032
+            </p>
+          </div>
 
-          <div className="relative w-full" style={{ aspectRatio: '282 / 166.3' }}>
+          <div
+            className="relative w-full"
+            style={{ maxWidth: '332.532px', aspectRatio: '332.532 / 196.108' }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/hero/logo.svg"
@@ -48,71 +58,86 @@ export default function AnimatedHero() {
               className="absolute inset-0 w-full h-full object-contain"
             />
           </div>
+        </div>
 
-          <div className="flex flex-col items-center gap-3 mt-1 w-full" style={{ gap: 'clamp(12px, 1.81vw, 23px)' }}>
+        {/* Info boxes + CTA */}
+        <div className="flex flex-col items-center" style={{ gap: 'clamp(18px, 2.67vw, 34.197px)' }}>
+          <div
+            className="flex items-center justify-center text-white uppercase w-full"
+            style={{ gap: 'clamp(16px, 2.95vw, 37.734px)' }}
+          >
             <div
-              className="flex items-center justify-center text-white uppercase w-full"
-              style={{ gap: 'clamp(8px, 2vw, 26px)' }}
-            >
-              <div
-                className="border-2 border-white rounded-[5px] flex flex-col items-center justify-center"
-                style={{
-                  height: 'clamp(52px, 5.78vw, 74px)',
-                  paddingInline: 'clamp(8px, 1.25vw, 16px)',
-                  gap: 'clamp(1px, 0.23vw, 3px)',
-                }}
-              >
-                <p
-                  className="font-sans font-semibold tracking-wide whitespace-nowrap"
-                  style={{ fontSize: 'clamp(6px, 0.86vw, 11px)' }}
-                >
-                  Sorteo en Vivo:
-                </p>
-                <p
-                  className="font-(family-name:--font-display) leading-tight text-center"
-                  style={{ fontSize: 'clamp(8px, 1.41vw, 18px)' }}
-                >
-                  24 Agosto
-                  <br />
-                  4:00PM
-                </p>
-              </div>
-              <div
-                className="border-2 border-white rounded-[5px] flex flex-col items-center justify-center"
-                style={{
-                  height: 'clamp(52px, 5.78vw, 74px)',
-                  paddingInline: 'clamp(14px, 2.19vw, 28px)',
-                  gap: 'clamp(1px, 0.23vw, 3px)',
-                }}
-              >
-                <p
-                  className="font-sans font-semibold tracking-wide whitespace-nowrap"
-                  style={{ fontSize: 'clamp(6px, 0.86vw, 11px)' }}
-                >
-                  Inversión:
-                </p>
-                <p
-                  className="font-(family-name:--font-display) whitespace-nowrap"
-                  style={{ fontSize: 'clamp(8px, 1.41vw, 18px)' }}
-                >
-                  10 soles
-                </p>
-              </div>
-            </div>
-
-            <Link
-              href="/prizes"
-              className="bg-white text-[#272727] uppercase font-sans font-semibold whitespace-nowrap transition-transform duration-300 hover:scale-105 shadow-[0_0_25px_rgba(255,255,255,0.35)]"
+              className="relative flex flex-col items-center justify-center border-white"
               style={{
-                borderRadius: 'clamp(6px, 0.7vw, 9px)',
-                paddingInline: 'clamp(12px, 1.41vw, 18px)',
-                paddingBlock: 'clamp(9px, 1.09vw, 14px)',
-                fontSize: 'clamp(8px, 1.41vw, 18px)',
+                backgroundColor: 'rgba(0,0,0,0.53)',
+                borderWidth: 'clamp(1.5px, 0.18vw, 2.358px)',
+                borderStyle: 'solid',
+                borderRadius: 'clamp(4px, 0.46vw, 5.896px)',
+                paddingInline: 'clamp(12px, 1.47vw, 18.867px)',
+                paddingBlock: 'clamp(9px, 1.1vw, 14.15px)',
+                gap: 'clamp(2px, 0.28vw, 3.538px)',
+                boxShadow: '0 0 clamp(6px, 0.89vw, 11.4px) #b90df4, 0 0 clamp(3px, 0.49vw, 6.3px) #b90df4, inset 0 0 clamp(3px, 0.39vw, 5px) #b90df4',
               }}
             >
-              Ver Catálogo de Premios
-            </Link>
+              <p
+                className="font-sans font-semibold tracking-wide"
+                style={{ fontSize: 'clamp(8px, 1.01vw, 12.971px)', color: '#53ec32', textShadow: '0 1px 6px #53ec32' }}
+              >
+                Sorteo en Vivo:
+              </p>
+              <p
+                className="font-(family-name:--font-display) leading-tight text-center"
+                style={{ fontSize: 'clamp(14px, 1.66vw, 21.225px)' }}
+              >
+                24 Agosto
+                <br />
+                4:00PM
+              </p>
+            </div>
+
+            <div
+              className="relative flex flex-col items-center justify-center bg-black/53 border-white"
+              style={{
+                borderWidth: 'clamp(1.5px, 0.18vw, 2.358px)',
+                borderStyle: 'solid',
+                borderRadius: 'clamp(4px, 0.46vw, 5.896px)',
+                paddingInline: 'clamp(12px, 1.47vw, 18.867px)',
+                paddingBlock: 'clamp(9px, 1.1vw, 14.15px)',
+                gap: 'clamp(2px, 0.28vw, 3.538px)',
+                boxShadow: '0 0 clamp(6px, 0.89vw, 11.4px) #b90df4, 0 0 clamp(3px, 0.49vw, 6.3px) #b90df4, inset 0 0 clamp(3px, 0.39vw, 5px) #b90df4',
+              }}
+            >
+              <p
+                className="font-sans font-semibold tracking-wide"
+                style={{ fontSize: 'clamp(8px, 1.01vw, 12.971px)', color: '#53ec32', textShadow: '0 1px 6px #53ec32' }}
+              >
+                Inversión:
+              </p>
+              <p
+                className="font-(family-name:--font-display)"
+                style={{ fontSize: 'clamp(14px, 1.66vw, 21.225px)' }}
+              >
+                10 soles
+              </p>
+            </div>
           </div>
+
+          <Link
+            href="/prizes"
+            className="flex items-center justify-center uppercase font-sans font-bold text-white transition-transform duration-300 hover:scale-105"
+            style={{
+              borderRadius: 'clamp(8px, 0.98vw, 12.5px)',
+              paddingInline: 'clamp(16px, 1.95vw, 25px)',
+              paddingBlock: 'clamp(12px, 1.52vw, 19.444px)',
+              fontSize: 'clamp(14px, 1.95vw, 25px)',
+              textShadow: '0 clamp(3px, 0.43vw, 5.556px) clamp(3px, 0.43vw, 5.556px) rgba(0,0,0,0.47)',
+              background:
+                'radial-gradient(ellipse at center, #db84ef 0%, #c169dd 25%, #a74ecc 50%, #8c33ba 75%, #7217a8 100%)',
+              boxShadow: '0 0 clamp(16px, 2.34vw, 30px) rgba(185,13,244,0.6)',
+            }}
+          >
+            Más de 30 premios!
+          </Link>
         </div>
       </div>
     </section>
