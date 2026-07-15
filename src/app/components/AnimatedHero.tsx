@@ -23,6 +23,7 @@ export default function AnimatedHero() {
         src="/patterns/bg-normal.svg"
         alt=""
         className="absolute inset-0 z-0 w-full h-full object-cover"
+        style={{ opacity: 0.3 }}
         aria-hidden="true"
       />
       {/* Highlighted pattern layer - crossfades in/out to create a haunting pulse.
