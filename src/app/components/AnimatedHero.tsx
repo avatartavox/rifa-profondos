@@ -1,8 +1,20 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function AnimatedHero() {
+  // JS-driven crossfade instead of a pure CSS keyframe: guarantees the pulse
+  // actually progresses (a CSS `animation` on a huge inline-SVG background
+  // was silently stalling), and makes the pace trivially adjustable.
+  const [bright, setBright] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = setInterval(() => setBright((b) => !b), 4500);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <section className="relative flex flex-col items-center justify-center overflow-hidden px-4 py-16 md:py-20 text-center min-h-[70vh] md:min-h-[80vh]">
       {/* Base carnival background pattern (dim state) */}
@@ -14,15 +26,19 @@ export default function AnimatedHero() {
         aria-hidden="true"
       />
       {/* Highlighted pattern layer - crossfades in/out to create a haunting pulse.
-          Rendered as an <img> (not a CSS background-image) so the browser
-          rasterizes the SVG once and animates opacity as a cheap
-          compositor-only operation instead of repainting the vector on
-          every frame. */}
+          Neon drop-shadow bloom sells the "glowing ghosts" effect on top of
+          the brighter fill-opacity baked into the asset itself. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/patterns/bg-glow.svg"
         alt=""
-        className="absolute inset-0 z-0 w-full h-full object-cover animate-bg-pulse-glow"
+        className="absolute inset-0 z-0 w-full h-full object-cover"
+        style={{
+          opacity: bright ? 1 : 0,
+          transition: 'opacity 4.3s ease-in-out',
+          filter:
+            'drop-shadow(0 0 12px rgba(83,236,50,0.55)) drop-shadow(0 0 12px rgba(185,13,244,0.55))',
+        }}
         aria-hidden="true"
       />
 
@@ -145,7 +161,7 @@ export default function AnimatedHero() {
               boxShadow: '0 0 clamp(16px, 2.34vw, 30px) rgba(185,13,244,0.6)',
             }}
           >
-            Más de 30 premios!
+            Ver Catálogo de Premios
           </Link>
         </div>
       </div>
