@@ -3,7 +3,7 @@ import FloatingPrizeCard from './FloatingPrizeCard';
 interface Prize {
   id: string;
   name: string;
-  providerIg?: string;
+  providerIg?: string | null;
   images?: Array<{ url: string }>;
 }
 

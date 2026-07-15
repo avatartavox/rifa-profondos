@@ -9,7 +9,7 @@ interface FloatingPrizeCardProps {
   id: string;
   name: string;
   imageUrl?: string;
-  providerIg?: string;
+  providerIg?: string | null;
   accentColor: 'green' | 'purple' | 'orange';
 }
 
