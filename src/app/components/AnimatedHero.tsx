@@ -6,15 +6,23 @@ export default function AnimatedHero() {
   return (
     <section className="relative flex flex-col items-center justify-center overflow-hidden px-4 py-16 md:py-20 text-center min-h-[70vh] md:min-h-[80vh]">
       {/* Base carnival background pattern (dim state) */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{ backgroundImage: 'url(/patterns/bg-normal.svg)' }}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/patterns/bg-normal.svg"
+        alt=""
+        className="absolute inset-0 z-0 w-full h-full object-cover"
         aria-hidden="true"
       />
-      {/* Highlighted pattern layer - crossfades in/out to create a haunting pulse */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center animate-bg-pulse-glow"
-        style={{ backgroundImage: 'url(/patterns/bg-glow.svg)' }}
+      {/* Highlighted pattern layer - crossfades in/out to create a haunting pulse.
+          Rendered as an <img> (not a CSS background-image) so the browser
+          rasterizes the SVG once and animates opacity as a cheap
+          compositor-only operation instead of repainting the vector on
+          every frame. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/patterns/bg-glow.svg"
+        alt=""
+        className="absolute inset-0 z-0 w-full h-full object-cover animate-bg-pulse-glow"
         aria-hidden="true"
       />
 
@@ -73,8 +81,8 @@ export default function AnimatedHero() {
                 borderWidth: 'clamp(1.5px, 0.18vw, 2.358px)',
                 borderStyle: 'solid',
                 borderRadius: 'clamp(4px, 0.46vw, 5.896px)',
+                height: 'clamp(64px, 6.82vw, 87.26px)',
                 paddingInline: 'clamp(12px, 1.47vw, 18.867px)',
-                paddingBlock: 'clamp(9px, 1.1vw, 14.15px)',
                 gap: 'clamp(2px, 0.28vw, 3.538px)',
                 boxShadow: '0 0 clamp(6px, 0.89vw, 11.4px) #b90df4, 0 0 clamp(3px, 0.49vw, 6.3px) #b90df4, inset 0 0 clamp(3px, 0.39vw, 5px) #b90df4',
               }}
@@ -96,13 +104,14 @@ export default function AnimatedHero() {
             </div>
 
             <div
-              className="relative flex flex-col items-center justify-center bg-black/53 border-white"
+              className="relative flex flex-col items-center justify-center border-white"
               style={{
+                backgroundColor: 'rgba(0,0,0,0.53)',
                 borderWidth: 'clamp(1.5px, 0.18vw, 2.358px)',
                 borderStyle: 'solid',
                 borderRadius: 'clamp(4px, 0.46vw, 5.896px)',
+                height: 'clamp(64px, 6.82vw, 87.26px)',
                 paddingInline: 'clamp(12px, 1.47vw, 18.867px)',
-                paddingBlock: 'clamp(9px, 1.1vw, 14.15px)',
                 gap: 'clamp(2px, 0.28vw, 3.538px)',
                 boxShadow: '0 0 clamp(6px, 0.89vw, 11.4px) #b90df4, 0 0 clamp(3px, 0.49vw, 6.3px) #b90df4, inset 0 0 clamp(3px, 0.39vw, 5px) #b90df4',
               }}
