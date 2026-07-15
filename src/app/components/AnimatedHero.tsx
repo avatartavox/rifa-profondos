@@ -26,7 +26,12 @@ export default function AnimatedHero() {
         style={{ opacity: 0.3 }}
         aria-hidden="true"
       />
-      {/* Highlighted pattern layer - crossfades in/out to create a haunting pulse. */}
+      {/* Highlighted pattern layer - crossfades in/out to create a haunting pulse.
+          bg-glow.svg has no opaque backing (transparent except the painted
+          ghosts), so without a solid backdrop here it would layer additively
+          on top of the dim pattern instead of replacing it, making the dim
+          layer look like it's brightening too. The dark background-color
+          gives it a full occlusion so the crossfade is a clean swap. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/patterns/bg-glow.svg"
@@ -35,6 +40,7 @@ export default function AnimatedHero() {
         style={{
           opacity: bright ? 1 : 0,
           transition: 'opacity 4.3s ease-in-out',
+          backgroundColor: '#0a0a0a',
         }}
         aria-hidden="true"
       />
