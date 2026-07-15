@@ -61,11 +61,12 @@ model Verification {
 }
 
 model Prize {
-  id          String       @id @default(cuid())
-  name        String
-  description String
-  providerIg  String?
-  images      PrizeImage[]
+  id                 String       @id @default(cuid())
+  name               String
+  description        String
+  providerIgLabel    String?
+  providerIgUsername String?
+  images             PrizeImage[]
   isFeatured  Boolean      @default(false)
   order       Int          @default(0)
   createdAt   DateTime     @default(now())

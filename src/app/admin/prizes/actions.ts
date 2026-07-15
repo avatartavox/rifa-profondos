@@ -13,9 +13,10 @@ const MAX_IMAGE_SIZE = 4.5 * 1024 * 1024;
 export async function createPrize(formData: FormData) {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
-  const providerIg = formData.get("providerIg") as string;
+  const providerIgLabel = formData.get("providerIgLabel") as string;
+  const providerIgUsername = formData.get("providerIgUsername") as string;
   const isFeatured = formData.get("isFeatured") === "on";
-  
+
   const file = formData.get("image") as File | null;
   if (file && file.size > MAX_IMAGE_SIZE) {
     throw new Error("La imagen supera el límite de 4.5MB. Por favor sube una imagen más liviana.");
@@ -39,7 +40,8 @@ export async function createPrize(formData: FormData) {
     data: {
       name,
       description,
-      providerIg: providerIg || null,
+      providerIgLabel: providerIgLabel || null,
+      providerIgUsername: providerIgUsername || null,
       isFeatured,
       images: imageUrl ? {
         create: {
@@ -59,7 +61,8 @@ export async function createPrize(formData: FormData) {
 export async function updatePrize(id: string, formData: FormData) {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
-  const providerIg = formData.get("providerIg") as string;
+  const providerIgLabel = formData.get("providerIgLabel") as string;
+  const providerIgUsername = formData.get("providerIgUsername") as string;
   const isFeatured = formData.get("isFeatured") === "on";
 
   const file = formData.get("image") as File | null;
@@ -93,7 +96,8 @@ export async function updatePrize(id: string, formData: FormData) {
     data: {
       name,
       description,
-      providerIg: providerIg || null,
+      providerIgLabel: providerIgLabel || null,
+      providerIgUsername: providerIgUsername || null,
       isFeatured,
       ...(imageUrl && {
         images: {

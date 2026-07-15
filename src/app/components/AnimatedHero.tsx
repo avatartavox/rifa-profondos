@@ -57,7 +57,7 @@ export default function AnimatedHero() {
               Rifa Pro Fondos
             </p>
             <p
-              className="font-sans font-semibold tracking-wide"
+              className="font-(family-name:--font-heading) font-semibold tracking-wide"
               style={{
                 fontSize: 'clamp(8px, 1.01vw, 12.971px)',
                 color: '#53ec32',
@@ -101,7 +101,7 @@ export default function AnimatedHero() {
               }}
             >
               <p
-                className="font-sans font-semibold tracking-wide"
+                className="font-(family-name:--font-heading) font-semibold tracking-wide"
                 style={{ fontSize: 'clamp(8px, 1.01vw, 12.971px)', color: '#53ec32', textShadow: '0 1px 6px #53ec32' }}
               >
                 Sorteo en Vivo:
@@ -130,7 +130,7 @@ export default function AnimatedHero() {
               }}
             >
               <p
-                className="font-sans font-semibold tracking-wide"
+                className="font-(family-name:--font-heading) font-semibold tracking-wide"
                 style={{ fontSize: 'clamp(8px, 1.01vw, 12.971px)', color: '#53ec32', textShadow: '0 1px 6px #53ec32' }}
               >
                 Inversión:
@@ -146,7 +146,7 @@ export default function AnimatedHero() {
 
           <Link
             href="/prizes"
-            className="flex items-center justify-center uppercase font-sans font-bold text-white transition-transform duration-300 hover:scale-105"
+            className="flex items-center justify-center uppercase font-(family-name:--font-heading) font-bold text-white transition-transform duration-300 hover:scale-105 active:scale-95"
             style={{
               borderRadius: 'clamp(8px, 0.98vw, 12.5px)',
               paddingInline: 'clamp(16px, 1.95vw, 25px)',

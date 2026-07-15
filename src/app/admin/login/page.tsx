@@ -65,14 +65,14 @@ export default function Login() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-carnival-green text-black font-bold py-3 rounded-md hover:bg-green-400 transition-colors disabled:opacity-50"
+            className="w-full bg-carnival-green text-black font-bold py-3 rounded-md hover:bg-green-400 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Entrando..." : "Ingresar"}
           </button>
         </form>
 
         <div className="mt-6 text-center">
-          <Link href="/" className="text-gray-500 hover:text-white text-sm inline-flex items-center gap-2">
+          <Link href="/" className="text-gray-500 hover:text-white active:scale-95 transition-all text-sm inline-flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" /> Volver al sitio web
           </Link>
         </div>

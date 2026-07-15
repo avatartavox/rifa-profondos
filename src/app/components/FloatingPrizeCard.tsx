@@ -9,7 +9,7 @@ interface FloatingPrizeCardProps {
   id: string;
   name: string;
   imageUrl?: string;
-  providerIg?: string | null;
+  providerIgLabel?: string | null;
   accentColor: 'green' | 'purple' | 'orange';
 }
 
@@ -29,7 +29,7 @@ export default function FloatingPrizeCard({
   id,
   name,
   imageUrl,
-  providerIg,
+  providerIgLabel,
   accentColor,
 }: FloatingPrizeCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -60,18 +60,18 @@ export default function FloatingPrizeCard({
       </div>
 
       {/* Prize Info */}
-      <h4 className="text-xl font-bold mb-2 text-white">{name}</h4>
+      <h4 className="font-(family-name:--font-heading) text-xl font-bold mb-2 text-white">{name}</h4>
       <p className="text-gray-400 text-sm mb-4">
-        {providerIg ? `Auspicia: ${providerIg}` : 'Auspicia: Promoción 2032'}
+        {providerIgLabel ? `Auspicia: ${providerIgLabel}` : 'Auspicia: Promoción 2032'}
       </p>
 
       <div className="flex justify-between items-center mt-auto pt-4 border-t border-white/10">
-        <span className={`text-sm font-semibold uppercase tracking-wider ${textClasses[accentColor]}`}>
+        <span className={`font-(family-name:--font-heading) text-sm font-semibold uppercase tracking-wider ${textClasses[accentColor]}`}>
           Destacado
         </span>
         <Link
           href={`/prizes/${id}`}
-          className="bg-white/10 px-3 py-1 rounded-full text-sm font-medium hover:bg-white/20 transition-colors"
+          className="bg-white/10 px-3 py-1 rounded-full text-sm font-medium hover:bg-white/20 active:scale-95 transition-all"
         >
           Ver Detalles
         </Link>
