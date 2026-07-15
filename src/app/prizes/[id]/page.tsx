@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import { ArrowLeft, Image as ImageIcon } from "lucide-react";
 import { notFound } from "next/navigation";
+import InstagramIcon from "../../components/InstagramIcon";
 
 const prisma = new PrismaClient();
 
@@ -25,7 +26,7 @@ export default async function PrizeDetailPage({ params }: { params: Promise<{ id
            style={{ backgroundImage: 'radial-gradient(circle at 50% 0%, var(--color-brand-orange) 0%, transparent 40%)' }} />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 py-12">
-        <Link href="/prizes" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8">
+        <Link href="/prizes" className="inline-flex items-center gap-2 text-gray-400 hover:text-white active:scale-95 transition-all mb-8">
           <ArrowLeft className="w-5 h-5" /> Volver al catálogo
         </Link>
 
@@ -55,27 +56,29 @@ export default async function PrizeDetailPage({ params }: { params: Promise<{ id
 
           {/* Details */}
           <div className="flex flex-col justify-center">
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">{prize.name}</h1>
-            
+            <h1 className="font-(family-name:--font-heading) text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">{prize.name}</h1>
+
             <div className="glass-card p-6 border-white/5 mb-8">
-              <h3 className="text-sm uppercase tracking-wider text-carnival-green font-bold mb-2">Descripción del Premio</h3>
+              <h3 className="font-(family-name:--font-heading) text-sm uppercase tracking-wider text-carnival-green font-bold mb-2">Descripción del Premio</h3>
               <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">{prize.description}</p>
             </div>
 
-            {prize.providerIg && (
+            {(prize.providerIgLabel || prize.providerIgUsername) && (
               <div className="flex items-center justify-between p-6 glass-card-dark border-carnival-purple/30 rounded-xl">
                 <div>
-                  <p className="text-sm text-gray-400 uppercase font-bold mb-1">Auspiciador</p>
-                  <p className="text-white font-medium">@{prize.providerIg.replace('https://instagram.com/', '')}</p>
+                  <p className="font-(family-name:--font-heading) text-sm text-gray-400 uppercase font-bold mb-1">Auspiciador</p>
+                  <p className="text-white font-medium">{prize.providerIgLabel || `@${prize.providerIgUsername}`}</p>
                 </div>
-                <a 
-                  href={prize.providerIg.startsWith('http') ? prize.providerIg : `https://instagram.com/${prize.providerIg}`} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="bg-carnival-purple hover:bg-purple-600 text-white p-3 rounded-full transition-transform hover:scale-110 font-bold text-sm"
-                >
-                  IG
-                </a>
+                {prize.providerIgUsername && (
+                  <a
+                    href={`https://instagram.com/${prize.providerIgUsername}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:scale-110 active:scale-90 transition-transform"
+                  >
+                    <InstagramIcon className="w-[30px] h-[30px]" />
+                  </a>
+                )}
               </div>
             )}
           </div>

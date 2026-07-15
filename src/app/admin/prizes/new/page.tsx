@@ -1,15 +1,16 @@
 import { createPrize } from "../actions";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import SubmitButton from "../../../components/SubmitButton";
 
 export default function NewPrizePage() {
   return (
     <div>
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/admin/prizes" className="text-gray-400 hover:text-white transition-colors">
+        <Link href="/admin/prizes" className="text-gray-400 hover:text-white active:scale-95 transition-all">
           <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-3xl font-bold">Agregar Nuevo Premio</h1>
+        <h1 className="font-(family-name:--font-heading) text-3xl font-bold">Agregar Nuevo Premio</h1>
       </div>
 
       <div className="glass-card-dark p-6 max-w-2xl">
@@ -39,13 +40,24 @@ export default function NewPrizePage() {
           </div>
 
           <div>
-            <label htmlFor="providerIg" className="block text-sm font-medium text-gray-300 mb-2">Auspiciador (Instagram URL o usuario)</label>
-            <input 
-              type="text" 
-              name="providerIg" 
-              id="providerIg" 
+            <label htmlFor="providerIgLabel" className="block text-sm font-medium text-gray-300 mb-2">Nombre del Auspiciador</label>
+            <input
+              type="text"
+              name="providerIgLabel"
+              id="providerIgLabel"
               className="w-full bg-black border border-white/20 rounded-md p-3 text-white focus:border-carnival-green focus:outline-none"
-              placeholder="Ej. Dermaesthetic"
+              placeholder="Ej. Flexigon"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="providerIgUsername" className="block text-sm font-medium text-gray-300 mb-2">Usuario de Instagram</label>
+            <input
+              type="text"
+              name="providerIgUsername"
+              id="providerIgUsername"
+              className="w-full bg-black border border-white/20 rounded-md p-3 text-white focus:border-carnival-green focus:outline-none"
+              placeholder="Ej. flexigon.io"
             />
           </div>
 
@@ -67,12 +79,12 @@ export default function NewPrizePage() {
           </div>
 
           <div className="pt-4 border-t border-white/10">
-            <button 
-              type="submit"
+            <SubmitButton
+              pendingLabel="Guardando..."
               className="w-full bg-carnival-green text-black font-bold py-3 rounded-md hover:bg-green-400 transition-colors"
             >
               Guardar Premio
-            </button>
+            </SubmitButton>
           </div>
         </form>
       </div>

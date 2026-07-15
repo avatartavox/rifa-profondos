@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, Trash2 } from "lucide-react";
 import { PrismaClient } from "@prisma/client";
 import { notFound } from "next/navigation";
+import SubmitButton from "../../../../components/SubmitButton";
 
 const prisma = new PrismaClient();
 
@@ -24,17 +25,17 @@ export default async function EditPrizePage({ params }: { params: Promise<{ id: 
   return (
     <div>
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/admin/prizes" className="text-gray-400 hover:text-white transition-colors">
+        <Link href="/admin/prizes" className="text-gray-400 hover:text-white active:scale-95 transition-all">
           <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-3xl font-bold flex-1">Editar Premio</h1>
+        <h1 className="font-(family-name:--font-heading) text-3xl font-bold flex-1">Editar Premio</h1>
         <form action={deletePrizeWithId}>
-          <button 
-            type="submit"
-            className="flex items-center gap-2 bg-red-500/20 text-red-400 px-4 py-2 rounded font-bold hover:bg-red-500 hover:text-white transition-colors"
+          <SubmitButton
+            pendingLabel="Eliminando..."
+            className="bg-red-500/20 text-red-400 px-4 py-2 rounded font-bold hover:bg-red-500 hover:text-white transition-colors"
           >
             <Trash2 className="w-4 h-4" /> Eliminar
-          </button>
+          </SubmitButton>
         </form>
       </div>
 
@@ -65,13 +66,26 @@ export default async function EditPrizePage({ params }: { params: Promise<{ id: 
           </div>
 
           <div>
-            <label htmlFor="providerIg" className="block text-sm font-medium text-gray-300 mb-2">Auspiciador (Instagram URL o usuario)</label>
-            <input 
-              type="text" 
-              name="providerIg" 
-              id="providerIg" 
-              defaultValue={prize.providerIg || ""}
+            <label htmlFor="providerIgLabel" className="block text-sm font-medium text-gray-300 mb-2">Nombre del Auspiciador</label>
+            <input
+              type="text"
+              name="providerIgLabel"
+              id="providerIgLabel"
+              defaultValue={prize.providerIgLabel || ""}
               className="w-full bg-black border border-white/20 rounded-md p-3 text-white focus:border-carnival-green focus:outline-none"
+              placeholder="Ej. Flexigon"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="providerIgUsername" className="block text-sm font-medium text-gray-300 mb-2">Usuario de Instagram</label>
+            <input
+              type="text"
+              name="providerIgUsername"
+              id="providerIgUsername"
+              defaultValue={prize.providerIgUsername || ""}
+              className="w-full bg-black border border-white/20 rounded-md p-3 text-white focus:border-carnival-green focus:outline-none"
+              placeholder="Ej. flexigon.io"
             />
           </div>
 
@@ -110,12 +124,12 @@ export default async function EditPrizePage({ params }: { params: Promise<{ id: 
           </div>
 
           <div className="pt-4 border-t border-white/10">
-            <button 
-              type="submit"
+            <SubmitButton
+              pendingLabel="Guardando..."
               className="w-full bg-carnival-green text-black font-bold py-3 rounded-md hover:bg-green-400 transition-colors"
             >
               Guardar Cambios
-            </button>
+            </SubmitButton>
           </div>
         </form>
       </div>

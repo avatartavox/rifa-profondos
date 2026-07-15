@@ -3,7 +3,8 @@ import FloatingPrizeCard from './FloatingPrizeCard';
 interface Prize {
   id: string;
   name: string;
-  providerIg?: string | null;
+  providerIgLabel?: string | null;
+  providerIgUsername?: string | null;
   images?: Array<{ url: string }>;
 }
 
@@ -30,7 +31,7 @@ export default function PrizeGrid({ prizes }: PrizeGridProps) {
           id={prize.id}
           name={prize.name}
           imageUrl={prize.images?.[0]?.url}
-          providerIg={prize.providerIg}
+          providerIgLabel={prize.providerIgLabel}
           accentColor={accentPattern[index % accentPattern.length]}
         />
       ))}

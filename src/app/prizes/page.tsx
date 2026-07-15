@@ -20,10 +20,10 @@ export default async function PrizesPage() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-12">
         <div className="flex items-center gap-4 mb-12">
-          <Link href="/" className="text-gray-400 hover:text-white transition-colors">
+          <Link href="/" className="text-gray-400 hover:text-white active:scale-95 transition-all">
             <ArrowLeft className="w-6 h-6" />
           </Link>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white">Catálogo de <span className="text-carnival-green">Premios</span></h1>
+          <h1 className="font-(family-name:--font-heading) text-4xl md:text-5xl font-extrabold text-white">Catálogo de <span className="text-carnival-green">Premios</span></h1>
         </div>
 
         {prizes.length === 0 ? (
@@ -35,7 +35,7 @@ export default async function PrizesPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {prizes.map((prize) => (
-              <Link href={`/prizes/${prize.id}`} key={prize.id} className="block group">
+              <Link href={`/prizes/${prize.id}`} key={prize.id} className="block group active:scale-[0.98] transition-transform">
                 <div className="glass-card-dark h-full flex flex-col p-4 border border-white/5 group-hover:border-carnival-purple/50 transition-all duration-300 group-hover:-translate-y-2">
                   <div className="h-48 rounded-lg bg-black/50 mb-4 overflow-hidden relative">
                     {prize.images.length > 0 ? (
@@ -46,9 +46,9 @@ export default async function PrizesPage() {
                       </div>
                     )}
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">{prize.name}</h3>
+                  <h3 className="font-(family-name:--font-heading) text-lg font-bold text-white mb-2 line-clamp-2">{prize.name}</h3>
                   <div className="mt-auto pt-4 flex items-center justify-between">
-                    <span className="text-xs uppercase text-gray-500">{prize.providerIg || "Promoción 2032"}</span>
+                    <span className="font-(family-name:--font-heading) text-xs uppercase text-gray-500">{prize.providerIgLabel || "Promoción 2032"}</span>
                     <span className="text-carnival-green font-semibold text-sm group-hover:text-carnival-orange transition-colors">Ver Detalles &rarr;</span>
                   </div>
                 </div>

@@ -70,7 +70,7 @@ export default function PrizeListClient({ initialPrizes }: { initialPrizes: Priz
                           <GripVertical className="w-5 h-5" />
                         </td>
                         <td className="p-4 font-medium">{prize.name}</td>
-                        <td className="p-4 text-gray-400">{prize.providerIg || '-'}</td>
+                        <td className="p-4 text-gray-400">{prize.providerIgLabel || '-'}</td>
                         <td className="p-4">
                           {prize.isFeatured ? (
                             <span className="bg-carnival-purple/20 text-carnival-purple px-2 py-1 rounded text-xs">Sí</span>
@@ -79,7 +79,7 @@ export default function PrizeListClient({ initialPrizes }: { initialPrizes: Priz
                           )}
                         </td>
                         <td className="p-4">
-                          <Link href={`/admin/prizes/${prize.id}/edit`} className="text-carnival-orange text-sm cursor-pointer hover:underline">
+                          <Link href={`/admin/prizes/${prize.id}/edit`} className="text-carnival-orange text-sm cursor-pointer hover:underline active:opacity-70 transition-opacity">
                             Editar
                           </Link>
                         </td>
