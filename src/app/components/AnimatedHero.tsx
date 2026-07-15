@@ -26,9 +26,7 @@ export default function AnimatedHero() {
         style={{ opacity: 0.3 }}
         aria-hidden="true"
       />
-      {/* Highlighted pattern layer - crossfades in/out to create a haunting pulse.
-          Neon drop-shadow bloom sells the "glowing ghosts" effect on top of
-          the brighter fill-opacity baked into the asset itself. */}
+      {/* Highlighted pattern layer - crossfades in/out to create a haunting pulse. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/patterns/bg-glow.svg"
@@ -37,8 +35,6 @@ export default function AnimatedHero() {
         style={{
           opacity: bright ? 1 : 0,
           transition: 'opacity 4.3s ease-in-out',
-          filter:
-            'drop-shadow(0 0 12px rgba(83,236,50,0.55)) drop-shadow(0 0 12px rgba(185,13,244,0.55))',
         }}
         aria-hidden="true"
       />
